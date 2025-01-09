@@ -17,7 +17,7 @@ model User {
   id    Int    @id @default(autoincrement())
   email String @unique
   role  Role
-  Item  Item[]
+  // Item  Item[]
 }
 
 enum Role {
@@ -29,8 +29,8 @@ model Item {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255)
   quantity  Int
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  // userId    Int
+  // user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -8,4 +8,6 @@ const getItems = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const addItem = async (req: Request, res: Response) => {};
+
 export { getItems };
