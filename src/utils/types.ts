@@ -3,7 +3,7 @@ import z from "zod";
 const item = z.object({
   id: z.string(),
   name: z.string(),
-  quanitiy: z.number(),
+  quantity: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
