@@ -36,16 +36,25 @@ const addItem = async (
   }
 };
 
-// const updateItem = async (req: Request, res: Response) => {
-//   try {
-//     const updatedItem: Item = await prisma.item.update({
-//       where: {
-//         id: req.params.id,
-//       },
-//     });
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+const updateItem = async (req: Request, res: Response) => {
+  try {
+    const updatedItem: Item = await prisma.item.update({
+      where: {
+        id: Number(req.body.id),
+      },
+      data: {
+        name: req.body.name,
+        quantity: req.body.quantity,
+        createdAt: req.body.createdAt,
+        updatedAt: new Date(),
+      },
+    });
 
-export { getItems, addItem };
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" + error });
+  }
+};
+
+export { getItems, addItem, updateItem };
