@@ -15,6 +15,21 @@ const getItems = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const getItemById = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const item = await prisma.item.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).json(item);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const addItem = async (
   req: Request,
   res: Response,
@@ -23,7 +38,7 @@ const addItem = async (
   try {
     const newItem: Item = await prisma.item.create({
       data: {
-        name: req.body.name,
+        itemName: req.body.name,
         quantity: req.body.quantity,
       },
     });
@@ -43,7 +58,8 @@ const updateItem = async (req: Request, res: Response) => {
         id: Number(req.body.id),
       },
       data: {
-        name: req.body.name,
+        id: Number(req.body.id),
+        itemName: req.body.itemName,
         quantity: req.body.quantity,
         createdAt: req.body.createdAt,
         updatedAt: new Date(),
@@ -57,4 +73,4 @@ const updateItem = async (req: Request, res: Response) => {
   }
 };
 
-export { getItems, addItem, updateItem };
+export { getItems, addItem, updateItem, getItemById };
