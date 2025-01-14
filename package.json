@@ -8,6 +8,7 @@
     "start": "node src/dist/index.js",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
+    "migrate": "prisma migrate dev --name cms",
     "down": "prisma db execute --file down.sql --schema prisma/schema.prisma",
     "rollback": "prisma migrate diff --from-schema-datamodel prisma/schema.prisma --to-migrations prisma/migrations --shadow-database-url mysql://root:rootroot@127.0.0.1:3306/james-cms-shadow --script > down.sql"
   },
