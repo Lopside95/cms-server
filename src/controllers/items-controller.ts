@@ -8,8 +8,6 @@ const getItems = async (req: Request, res: Response): Promise<void> => {
     const items: Item[] = await prisma.item.findMany();
 
     res.status(200).json(items);
-
-    // res.status(200).json({ message: "Hello from the items route" });
   } catch (error) {
     console.error(error);
   }
@@ -73,4 +71,19 @@ const updateItem = async (req: Request, res: Response) => {
   }
 };
 
-export { getItems, addItem, updateItem, getItemById };
+const deleteItem = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    await prisma.item.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(204).json({ message: "Item deleted successfully" });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { getItems, addItem, updateItem, getItemById, deleteItem };
