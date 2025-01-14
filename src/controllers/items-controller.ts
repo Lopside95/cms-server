@@ -82,6 +82,7 @@ const deleteItem = async (req: Request, res: Response) => {
 
     res.status(204).json({ message: "Item deleted successfully" });
   } catch (error) {
+    res.status(500).json({ error: "Couldn't delete item" + error });
     console.error(error);
   }
 };
