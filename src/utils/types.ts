@@ -8,4 +8,49 @@ const item = z.object({
   updatedAt: z.date(),
 });
 
+export const animal = z.object({
+  id: z.number(),
+  name: z.string(),
+  species: z.string(),
+  age: z.number(),
+  chipNumber: z.string(),
+  shelterId: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  breed: z.string(),
+});
+
+export const food = z.object({
+  id: z.number(),
+  name: z.string(),
+  quantity: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  shelterId: z.number(),
+});
+
+export const shelter = z.object({
+  id: z.number(),
+  name: z.string(),
+  location: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  phone: z.string(),
+  email: z.string(),
+  longitude: z.number(),
+  latitude: z.number(),
+  animals: z.array(animal),
+  foods: z.array(food),
+});
+
+const Condition = z.enum(["HEALTHY", "SICK", "INJURED", "DISABLED"]);
+
+const Role = z.enum(["USER", "ADMIN"]);
+
 export type Item = z.infer<typeof item>;
+
+export type Animal = z.infer<typeof animal>;
+export type Shelter = z.infer<typeof shelter>;
+export type Food = z.infer<typeof food>;
+export type Condition = z.infer<typeof Condition>;
+export type Role = z.infer<typeof Role>;

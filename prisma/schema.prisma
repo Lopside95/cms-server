@@ -24,8 +24,6 @@ model Item {
   updatedAt DateTime @updatedAt
 }
 
-
-
 model Animal {
   id         Int      @id @default(autoincrement())
   name       String   @db.VarChar(255)
@@ -50,7 +48,7 @@ model Shelter {
   longitude Float
   latitude  Float
   animals   Animal[]
-  foods      Food[]
+  foods     Food[]
 }
 
 model Food {
