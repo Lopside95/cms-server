@@ -8,7 +8,7 @@ const item = z.object({
   updatedAt: z.date(),
 });
 
-export const animal = z.object({
+const animal = z.object({
   id: z.number(),
   name: z.string(),
   species: z.string(),
@@ -20,7 +20,7 @@ export const animal = z.object({
   breed: z.string(),
 });
 
-export const food = z.object({
+const food = z.object({
   id: z.number(),
   name: z.string(),
   quantity: z.number(),
@@ -29,7 +29,7 @@ export const food = z.object({
   shelterId: z.number(),
 });
 
-export const shelter = z.object({
+const shelter = z.object({
   id: z.number(),
   name: z.string(),
   location: z.string(),
@@ -43,14 +43,17 @@ export const shelter = z.object({
   foods: z.array(food),
 });
 
-const Condition = z.enum(["HEALTHY", "SICK", "INJURED", "DISABLED"]);
+const condition = z.enum(["HEALTHY", "SICK", "INJURED", "DISABLED"]);
 
-const Role = z.enum(["USER", "ADMIN"]);
+const role = z.enum(["USER", "ADMIN"]);
+
+// export const allModels = [item, animal, food, shelter];
+
+export { item, animal, food, shelter, condition, role };
 
 export type Item = z.infer<typeof item>;
-
 export type Animal = z.infer<typeof animal>;
 export type Shelter = z.infer<typeof shelter>;
 export type Food = z.infer<typeof food>;
-export type Condition = z.infer<typeof Condition>;
-export type Role = z.infer<typeof Role>;
+export type Condition = z.infer<typeof condition>;
+export type Role = z.infer<typeof role>;

@@ -16,6 +16,7 @@ const getItems = async (req: Request, res: Response): Promise<void> => {
 const getItemById = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
+
     const item = await prisma.item.findUnique({
       where: {
         id: id,

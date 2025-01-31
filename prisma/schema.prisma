@@ -47,6 +47,7 @@ model Shelter {
   email     String   @unique
   longitude Float
   latitude  Float
+  capacity  Int
   animals   Animal[]
   foods     Food[]
 }

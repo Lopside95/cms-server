@@ -16,7 +16,7 @@ app.use(cors());
 app.use("/items", items);
 app.use("/foods", foods);
 app.use("/animals", animals);
-app.use("/shelers", shelters);
+app.use("/shelters", shelters);
 
 app.listen(port, () => {
   console.log("CMS is running on", port);
