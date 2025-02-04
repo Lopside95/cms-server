@@ -29,11 +29,11 @@ model Animal {
   name       String   @db.VarChar(255)
   species    String   @db.VarChar(255)
   age        Int
-  chipNumber String   @unique
-  shelterId  Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  shelter    Shelter  @relation(fields: [shelterId], references: [id])
+  chip_number String   @unique
+  shelter_id  Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  shelter    Shelter?  @relation(fields: [shelter_id], references: [id])
   breed      String
 }
 
@@ -41,8 +41,8 @@ model Shelter {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255)
   location  String   @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   phone     String   @db.VarChar(255)
   email     String   @unique
   longitude Float
@@ -56,10 +56,10 @@ model Food {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255)
   quantity  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  shelterId Int
-  shelter   Shelter  @relation(fields: [shelterId], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  shelter_id Int
+  shelter   Shelter  @relation(fields: [shelter_id], references: [id])
 }
 
 enum Condition {

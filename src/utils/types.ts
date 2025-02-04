@@ -2,10 +2,10 @@ import z from "zod";
 
 const item = z.object({
   id: z.number(),
-  itemName: z.string(),
+  item_name: z.string(),
   quantity: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
 
 const animal = z.object({
@@ -13,10 +13,10 @@ const animal = z.object({
   name: z.string(),
   species: z.string(),
   age: z.number(),
-  chipNumber: z.string(),
-  shelterId: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  chip_number: z.string(),
+  shelter_id: z.number(),
+  created_at: z.date(),
+  updated_at: z.date(),
   breed: z.string(),
 });
 
@@ -24,17 +24,17 @@ const food = z.object({
   id: z.number(),
   name: z.string(),
   quantity: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-  shelterId: z.number(),
+  created_at: z.date(),
+  updated_at: z.date(),
+  shelter_id: z.number(),
 });
 
 const shelter = z.object({
   id: z.number(),
   name: z.string(),
   location: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  created_at: z.date(),
+  updated_at: z.date(),
   phone: z.string(),
   email: z.string(),
   longitude: z.number(),
