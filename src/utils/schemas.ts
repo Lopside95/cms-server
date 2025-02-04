@@ -1,7 +1,7 @@
 import z from "zod";
 
 const itemSchema = z.object({
-  id: z.number(),
+  // id: z.number(),
   itemName: z.string(),
   quantity: z.number(),
 });

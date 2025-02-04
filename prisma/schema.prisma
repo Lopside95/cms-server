@@ -1,46 +1,75 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
   id    Int    @id @default(autoincrement())
   email String @unique
   role  Role
-  // Item  Item[]
+}
+
+model Item {
+  id        Int      @id @default(autoincrement())
+  itemName  String   @db.VarChar(255)
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Animal {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  species    String   @db.VarChar(255)
+  age        Int
+  chip_number String   @unique
+  shelter_id  Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  shelter    Shelter?  @relation(fields: [shelter_id], references: [id])
+  breed      String
+}
+
+model Shelter {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  location  String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  phone     String   @db.VarChar(255)
+  email     String   @unique
+  longitude Float
+  latitude  Float
+  capacity  Int
+  animals   Animal[]
+  foods     Food[]
+}
+
+model Food {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  quantity  Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  shelter_id Int
+  shelter   Shelter  @relation(fields: [shelter_id], references: [id])
+}
+
+enum Condition {
+  HEALTHY
+  SICK
+  INJURED
+  DISABLED
 }
 
 enum Role {
   USER
   ADMIN
-}
-
-model Item {
-  id        Int      @id @default(autoincrement())
-  itemName      String   @db.VarChar(255)
-  quantity  Int
-  // userId    Int
-  // user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
 }
