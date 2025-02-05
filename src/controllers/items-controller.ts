@@ -37,7 +37,7 @@ const addItem = async (
   try {
     const newItem: Item = await prisma.item.create({
       data: {
-        itemName: req.body.itemName,
+        item_name: req.body.itemName,
         quantity: req.body.quantity,
       },
     });
@@ -58,10 +58,10 @@ const updateItem = async (req: Request, res: Response) => {
       },
       data: {
         id: Number(req.body.id),
-        itemName: req.body.itemName,
+        item_name: req.body.itemName,
         quantity: req.body.quantity,
-        createdAt: req.body.createdAt,
-        updatedAt: new Date(),
+        created_at: req.body.createdAt,
+        updated_at: new Date(),
       },
     });
 

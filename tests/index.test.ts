@@ -16,10 +16,10 @@ describe("get items page", () => {
 describe("create item", () => {
   it("should return 201 and create item", async () => {
     const res = await request(app).post("/items").send({
-      itemName: testItem.itemName,
+      itemName: testItem.item_name,
       quantity: testItem.quantity,
     });
     expect(res.status).toBe(201);
-    expect(res.body.itemName).toBe(testItem.itemName);
+    expect(res.body.itemName).toBe(testItem.item_name);
   });
 });

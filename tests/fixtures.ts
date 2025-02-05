@@ -1,7 +1,7 @@
 import { ItemSchema } from "../src/utils/schemas";
 
 const testItem: ItemSchema = {
-  itemName: "Test Item",
+  item_name: "Test Item",
   quantity: 10,
 };
 
