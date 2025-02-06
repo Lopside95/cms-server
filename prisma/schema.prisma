@@ -25,7 +25,7 @@ model Item {
 }
 
 model Animal {
-  id         Int      @id @default(autoincrement())
+  id         Int      @id @default(autoincrement()) 
   name       String   @db.VarChar(255)
   species    String   @db.VarChar(255)
   age        Int

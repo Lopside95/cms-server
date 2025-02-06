@@ -1,8 +1,8 @@
-import { PrismaClient, Shelter } from "@prisma/client";
+import { Prisma, PrismaClient, Shelter } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { ItemSchema } from "../utils/schemas";
 import { prisma } from "..";
-import { prismaAdd } from "../utils/helpers";
+import { prismaAdd, uniqueConstraintError } from "../utils/helpers";
 
 const getShelters = async (req: Request, res: Response) => {
   try {
@@ -48,32 +48,28 @@ const addShelter = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  const data = req.body;
   try {
-    const data = req.body;
     console.log("data", data);
-    const newShelter = await prismaAdd.shelter.add({ data });
+    const shelterPayload = await prismaAdd.shelter.add({ data });
 
-    // const newShelter: Shelter = await prisma.shelter.create({
-    //   data: {
-    //     name: req.body.name,
-    //     location: req.body.location,
-    //     email: req.body.email,
-    //     phone: req.body.phone,
-    //     capacity: req.body.capacity,
-    //     longitude: req.body.longitude,
-    //     latitude: req.body.latitude,
-    //     animals: req.body.animals,
-    //     foods: req.body.foods,
-    //   },
-    // });
-
-    res.status(201).json(newShelter);
+    res.status(201).json(shelterPayload);
   } catch (error) {
-    console.error(error);
-    next(error);
-    res.status(500).json({ error: "Something went wrong" + error });
+    if (uniqueConstraintError(error)) {
+      res.status(409).json({
+        error: `Unique constraint violation, the email ${data.email} is already associated with another shelter`,
+      });
+    } else {
+      console.error(error);
+      next(error);
+
+      res
+        .status(500)
+        .json({ message: "Something went wrong New Error: " + error });
+    }
   }
 };
+
 // const addShelter = async (
 //   req: Request,
 //   res: Response,

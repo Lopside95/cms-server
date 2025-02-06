@@ -45,6 +45,14 @@ const prismaAdd = new PrismaClient().$extends({
   },
 });
 
+const uniqueConstraintError = (error: unknown) => {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    if (error.code === "P2002") {
+      return true;
+    }
+  }
+};
+
 // const add = new PrismaClient().$extends({
 //     model: {
 //         $allModels: {
@@ -62,4 +70,4 @@ const prismaAdd = new PrismaClient().$extends({
 //     }
 // })
 
-export { getById, checkExists, prismaAdd };
+export { getById, checkExists, prismaAdd, uniqueConstraintError };
