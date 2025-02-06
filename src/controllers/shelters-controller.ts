@@ -2,6 +2,7 @@ import { PrismaClient, Shelter } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { ItemSchema } from "../utils/schemas";
 import { prisma } from "..";
+import { prismaAdd } from "../utils/helpers";
 
 const getShelters = async (req: Request, res: Response) => {
   try {
@@ -48,19 +49,23 @@ const addShelter = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const newShelter: Shelter = await prisma.shelter.create({
-      data: {
-        name: req.body.name,
-        location: req.body.location,
-        email: req.body.email,
-        phone: req.body.phone,
-        capacity: req.body.capacity,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude,
-        animals: req.body.animals,
-        foods: req.body.foods,
-      },
-    });
+    const data = req.body;
+    console.log("data", data);
+    const newShelter = await prismaAdd.shelter.add({ data });
+
+    // const newShelter: Shelter = await prisma.shelter.create({
+    //   data: {
+    //     name: req.body.name,
+    //     location: req.body.location,
+    //     email: req.body.email,
+    //     phone: req.body.phone,
+    //     capacity: req.body.capacity,
+    //     longitude: req.body.longitude,
+    //     latitude: req.body.latitude,
+    //     animals: req.body.animals,
+    //     foods: req.body.foods,
+    //   },
+    // });
 
     res.status(201).json(newShelter);
   } catch (error) {
@@ -69,6 +74,33 @@ const addShelter = async (
     res.status(500).json({ error: "Something went wrong" + error });
   }
 };
+// const addShelter = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ): Promise<void> => {
+//   try {
+//     const newShelter: Shelter = await prisma.shelter.create({
+//       data: {
+//         name: req.body.name,
+//         location: req.body.location,
+//         email: req.body.email,
+//         phone: req.body.phone,
+//         capacity: req.body.capacity,
+//         longitude: req.body.longitude,
+//         latitude: req.body.latitude,
+//         animals: req.body.animals,
+//         foods: req.body.foods,
+//       },
+//     });
+
+//     res.status(201).json(newShelter);
+//   } catch (error) {
+//     console.error(error);
+//     next(error);
+//     res.status(500).json({ error: "Something went wrong" + error });
+//   }
+// };
 
 export { getShelters, addShelter, getShelterById };
 

@@ -49,7 +49,7 @@ const getItemById = async (req: Request, res: Response) => {
 
 const addItem = async (req: Request, res: Response, next?: NextFunction) => {
   const data = {
-    item_name: req.body.item_name,
+    item_name: req.body.itemName,
     quantity: req.body.quantity,
   };
 
