@@ -2,6 +2,7 @@ import { Item, PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { ItemSchema } from "../utils/schemas";
 import { prisma } from "..";
+import { prismaAdd, getById } from "../utils/helpers";
 
 const getItems = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -14,41 +15,78 @@ const getItems = async (req: Request, res: Response): Promise<void> => {
 };
 
 const getItemById = async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
+  const id = Number(req.params.id);
 
-    const item = await prisma.item.findUnique({
-      where: {
-        id: id,
-      },
+  try {
+    const item = await getById.item.findUnique({
+      where: { id: id },
     });
 
     res.status(200).json(item);
+    // const item = await getById.item.findUnique({
+    //   where: {id: req.params.id}
+    // })
   } catch (error) {
     console.error(error);
   }
 };
 
-const addItem = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+// const getItemById = async (req: Request, res: Response) => {
+//   try {
+//     const id = Number(req.params.id);
+
+//     const item = await prisma.item.findUnique({
+//       where: {
+//         id: id,
+//       },
+//     });
+
+//     res.status(200).json(item);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+const addItem = async (req: Request, res: Response, next?: NextFunction) => {
+  const data = {
+    item_name: req.body.item_name,
+    quantity: req.body.quantity,
+  };
+
+  console.log("data", data);
+
   try {
-    const newItem: Item = await prisma.item.create({
-      data: {
-        item_name: req.body.itemName,
-        quantity: req.body.quantity,
-      },
-    });
+    const newItem = await prismaAdd.item.add({ data });
 
-    res.status(201).json(newItem);
+    res.status(200).json(newItem);
   } catch (error) {
     console.error(error);
-    next(error);
-    res.status(500).json({ error: "Something went wrong" + error });
+    res
+      .status(500)
+      .json({ message: "Error creating item is: " + (error as Error).message });
   }
 };
+
+// const addItem = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ): Promise<void> => {
+//   try {
+//     const newItem: Item = await prisma.item.create({
+//       data: {
+//         item_name: req.body.itemName,
+//         quantity: req.body.quantity,
+//       },
+//     });
+
+//     res.status(201).json(newItem);
+//   } catch (error) {
+//     console.error(error);
+//     next(error);
+//     res.status(500).json({ error: "Something went wrong" + error });
+//   }
+// };
 
 const updateItem = async (req: Request, res: Response) => {
   try {

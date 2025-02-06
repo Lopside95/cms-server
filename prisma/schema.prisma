@@ -59,7 +59,7 @@ model Food {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   shelter_id Int
-  shelter   Shelter  @relation(fields: [shelter_id], references: [id])
+  shelter   Shelter?  @relation(fields: [shelter_id], references: [id])
 }
 
 enum Condition {

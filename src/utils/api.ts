@@ -1,6 +1,7 @@
 import { Animal, Food, Item, Shelter } from "@prisma/client";
 import { prisma } from "..";
 import { animal, food, item, shelter } from "./types";
+import { NextFunction } from "express";
 
 // interface Model {
 // item: Item;
@@ -11,6 +12,7 @@ import { animal, food, item, shelter } from "./types";
 // }
 
 type Model = Item | Animal | Food | Shelter;
+type Group = Item | Animal | Food | Shelter;
 
 // export interface Create<T> {
 //     route: Route;
@@ -24,10 +26,39 @@ type Model = Item | Animal | Food | Shelter;
 
 const allModels = [item, animal, food, shelter];
 
-interface GetById<T> {
+type ApiActions = {
+  req: Request;
+  res: Response;
+  next?: NextFunction;
+};
+
+const group = item || animal || food || shelter;
+interface GetById {
+  // api: ApiActions;
   id: number;
-  model: T;
+  model?: Model;
+  group?: Group;
 }
+
+// const getById = async ({ id, model, group }: GetById) => {
+
+//   try {
+
+//     const fetched = await prisma.group.findUnique({
+//       where: {
+//         id: group?.id,
+//       },
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+
+// };
+
+// interface GetById<T> {
+//   id: number;
+//   model: T;
+// }
 
 interface GetModel<T> {
   id: number;
@@ -48,6 +79,23 @@ const getModel = (input: string) => {
       return null;
   }
 };
+
+// const getById = async <T>(model: T, res: Response, next?: NextFunction) => {
+
+//   // const toGet = typeof model === "string" ? getModel(model) : model;
+
+//   try {
+//     const fetched = await prisma.toGet.findUnique({
+//       where: {
+//         id: id,
+//       },
+//     })
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
+// const handleAdd = async <T>(action: ()=> Promise<T>, res: Response, next?: NextFunction) => {}
 
 // const getItemById = async (req: Request, res: Response) => {
 //   try {

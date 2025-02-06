@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Shelter } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { ItemSchema } from "../utils/schemas";
 import { prisma } from "..";
-import { Shelter } from "@prisma/client";
 
 const getShelters = async (req: Request, res: Response) => {
   try {
@@ -43,7 +42,7 @@ const getShelterById = async (req: Request, res: Response) => {
 //   }
 // }
 
-const createShelter = async (
+const addShelter = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -58,8 +57,8 @@ const createShelter = async (
         capacity: req.body.capacity,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
-        animals: req.body.animals || [],
-        foods: req.body.foods || [],
+        animals: req.body.animals,
+        foods: req.body.foods,
       },
     });
 
@@ -71,7 +70,7 @@ const createShelter = async (
   }
 };
 
-export { getShelters, createShelter, getShelterById };
+export { getShelters, addShelter, getShelterById };
 
 // export type Route = "items" | "animals" | "foods" | "shelters";
 
